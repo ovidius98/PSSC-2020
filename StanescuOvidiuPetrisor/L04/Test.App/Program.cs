@@ -10,7 +10,7 @@ namespace Test.App
     {
         static void Main(string[] args)
         {
-            var cmd = new CreateProfileCmd("Ion", string.Empty, "Ionescu", "ion.inonescu@company.com");
+            var cmd = new CreateProfileCmd("Bogdan", string.Empty, "Bogdan", "bogdan.vladutu@test.com");
             var result = CreateProfile(cmd);
 
             result.Match(
@@ -24,7 +24,7 @@ namespace Test.App
 
         private static ICreateProfileResult ProcessInvalidProfile(ProfileValidationFailed validationErrors)
         {
-            Console.WriteLine("Profile validation failed: ");
+            Console.WriteLine("Validare de profil esuata: ");
             foreach (var error in validationErrors.ValidationErrors)
             {
                 Console.WriteLine(error);
@@ -34,13 +34,13 @@ namespace Test.App
 
         private static ICreateProfileResult ProcessProfileNotCreated(ProfileNotCreated profileNotCreatedResult)
         {
-            Console.WriteLine($"Profile not created: {profileNotCreatedResult.Reason}");
+            Console.WriteLine($"Profil necreat: {profileNotCreatedResult.Reason}");
             return profileNotCreatedResult;
         }
 
         private static ICreateProfileResult ProcessProfileCreated(ProfileCreated profile)
         {
-            Console.WriteLine($"Profile {profile.ProfileId}");
+            Console.WriteLine($"Profil {profile.ProfileId}");
             return profile;
         }
 
@@ -48,13 +48,13 @@ namespace Test.App
         {
             if (string.IsNullOrWhiteSpace(createProfileCommand.EmailAddress))
             {
-                var errors = new List<string>() { "Invlaid email address" };
+                var errors = new List<string>() { "Adresa invalida" };
                 return new ProfileValidationFailed(errors);
             }
 
             if(new Random().Next(10) > 1)
             {
-                return new ProfileNotCreated("Email could not be verified");
+                return new ProfileNotCreated("Email-ul nu a putut fi verificat");
             }
 
             var profileId = Guid.NewGuid();

@@ -9,7 +9,10 @@ namespace Profile.Domain.CreateProfileWorkflow
     [AsChoice]
     public static partial class CreateProfileResult
     {
-        public interface ICreateProfileResult { }
+        public interface ICreateProfileResult
+        {
+            void Match(global::System.Func<ProfileCreated, ICreateProfileResult> processProfileCreated, global::System.Func<ProfileNotCreated, ICreateProfileResult> processProfileNotCreated, global::System.Func<ProfileValidationFailed, ICreateProfileResult> processInvalidProfile);
+        }
 
         public class ProfileCreated: ICreateProfileResult
         {
